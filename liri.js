@@ -26,7 +26,20 @@ if (request === 'concert-this') {
 }
 
 if (request === 'spotify-this-song') { 
-    console.log('spotify-this-song success')
+    spotify.search({ 
+        type: 'track', 
+        query: input 
+    }).then(function(response) {
+        for (var i = 0; i < response.tracks.items.length; i++) {
+            console.log('--------------')
+            console.log('\nArtist: ' + response.tracks.items[i].album.artists[0].name); // artist name
+            console.log('Album: ' + response.tracks.items[i].album.name) // album
+            console.log('Song: ' + response.tracks.items[i].name); // track name
+            console.log('Preview: ' + response.tracks.items[i].preview_url + '\n'); // preview
+        }
+    }).catch(function(err) {
+        console.log(err);
+    });
 }
 
 if (request === 'movie-this') { 
@@ -37,14 +50,13 @@ if (request === 'do-what-it-says') {
     console.log('do-what-it-says success')
 }
 
+// Capitalize first letter of each word for input formatting
 function capitalize() { 
     str = input.split(" ");
 
-    for (var i = 0, x = str.length; i < x; i++) {
+    for (var i = 0; i < str.length; i++) {
         str[i] = str[i][0].toUpperCase() + str[i].substr(1);
     }
 
     return str.join(" ");
 }
-
-
