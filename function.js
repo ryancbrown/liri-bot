@@ -29,9 +29,19 @@ var bands = function(input) {
         } 
 
         if (response.data.length > 0) {
+            console.log(response.data)
             console.log('\n\nUpcoming ' + capitalize(input) + ' Shows \n--------------');
             for (var i = 0; i < response.data.length; i++) {
-                console.log('Venue: ' + response.data[i].venue.name + '\nCity: ' + response.data[i].venue.city + ', ' + response.data[i].venue.region + '\nDate: ' + moment(response.data[i].datetime).format('YYYY-MM-DD HH:mm'));
+                var city;
+
+                // If non-US city then show country instead of state
+                if (response.data[i].venue.region !== '') { 
+                    city = response.data[i].venue.city + ', ' + response.data[i].venue.region
+                } else { 
+                    city = response.data[i].venue.city + ', ' + response.data[i].venue.country
+                } 
+
+                console.log('Venue: ' + response.data[i].venue.name + '\nCity: ' + city + response.data[i].venue.region + '\nDate: ' + moment(response.data[i].datetime).format('YYYY-MM-DD HH:mm'));
                 console.log('--------------');
             }
             console.log('\n\n')
@@ -39,7 +49,7 @@ var bands = function(input) {
             console.log('There are no upcoming concerts for ' + capitalize(input) + '. Try another artist.');
         }
     }).catch(function (error) {
-        console.log(error);
+        console.log('Error: Artist not found. Try another search.\n\n');
     });
 }
 
