@@ -172,7 +172,7 @@ var random = function() {
             on = false
             omdb(search)
         } else if (request === 'concert-this') { 
-            console.log('\n\nSearching for a movie...')
+            console.log('\n\nSearching for a concert...')
             on = false
             bands(search)
         }
